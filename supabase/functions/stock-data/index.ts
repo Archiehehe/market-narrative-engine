@@ -57,19 +57,33 @@ serve(async (req) => {
     const spyRes = await fetch(spyUrl);
     const spyQuote = await spyRes.json();
 
-    // Fetch historical data from Polygon for price history
+    // Fetch historical data from Polygon for price history (both stock and SPY)
     let priceHistory: { date: string; price: number }[] = [];
+    let spyHistory: { date: string; price: number }[] = [];
     
     if (POLYGON_API_KEY) {
       const thirtyDaysAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
       const historyUrl = `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/1/day/${thirtyDaysAgo.toISOString().split('T')[0]}/${toDate}?adjusted=true&sort=asc&apiKey=${POLYGON_API_KEY}`;
+      const spyHistoryUrl = `https://api.polygon.io/v2/aggs/ticker/SPY/range/1/day/${thirtyDaysAgo.toISOString().split('T')[0]}/${toDate}?adjusted=true&sort=asc&apiKey=${POLYGON_API_KEY}`;
       
       try {
-        const historyRes = await fetch(historyUrl);
+        const [historyRes, spyHistoryRes] = await Promise.all([
+          fetch(historyUrl),
+          fetch(spyHistoryUrl)
+        ]);
+        
         const historyData = await historyRes.json();
+        const spyHistoryData = await spyHistoryRes.json();
         
         if (historyData.results) {
           priceHistory = historyData.results.map((d: any) => ({
+            date: new Date(d.t).toISOString().split('T')[0],
+            price: d.c,
+          }));
+        }
+        
+        if (spyHistoryData.results) {
+          spyHistory = spyHistoryData.results.map((d: any) => ({
             date: new Date(d.t).toISOString().split('T')[0],
             price: d.c,
           }));
@@ -89,21 +103,38 @@ serve(async (req) => {
     const spyDailyChange = ((spyQuote.c - spyQuote.pc) / spyQuote.pc) * 100;
     const relativePerformance = dailyChangePercent - spyDailyChange;
 
-    // Calculate 5D and 1M performance from history
+    // Calculate 5D and 1M performance from history (using proper trading day logic)
     let fiveDayChange = 0;
     let oneMonthChange = 0;
+    let fiveDaySpyChange = 0;
+    let oneMonthSpyChange = 0;
 
     if (priceHistory.length > 0) {
-      const fiveDaysAgoPrice = priceHistory.length >= 5 
-        ? priceHistory[priceHistory.length - 5]?.price 
-        : priceHistory[0]?.price;
+      // For 5D: use 5 trading days back from the end
+      const fiveDayIndex = Math.max(0, priceHistory.length - 6); // -6 because we want 5 days of change
+      const fiveDaysAgoPrice = priceHistory[fiveDayIndex]?.price;
       const monthAgoPrice = priceHistory[0]?.price;
 
-      if (fiveDaysAgoPrice) {
+      if (fiveDaysAgoPrice && currentPrice) {
         fiveDayChange = ((currentPrice - fiveDaysAgoPrice) / fiveDaysAgoPrice) * 100;
       }
-      if (monthAgoPrice) {
+      if (monthAgoPrice && currentPrice) {
         oneMonthChange = ((currentPrice - monthAgoPrice) / monthAgoPrice) * 100;
+      }
+    }
+
+    // Calculate SPY performance for same periods
+    if (spyHistory.length > 0) {
+      const fiveDaySpyIndex = Math.max(0, spyHistory.length - 6);
+      const fiveDaysAgoSpyPrice = spyHistory[fiveDaySpyIndex]?.price;
+      const monthAgoSpyPrice = spyHistory[0]?.price;
+      const currentSpyPrice = spyHistory[spyHistory.length - 1]?.price;
+
+      if (fiveDaysAgoSpyPrice && currentSpyPrice) {
+        fiveDaySpyChange = ((currentSpyPrice - fiveDaysAgoSpyPrice) / fiveDaysAgoSpyPrice) * 100;
+      }
+      if (monthAgoSpyPrice && currentSpyPrice) {
+        oneMonthSpyChange = ((currentSpyPrice - monthAgoSpyPrice) / monthAgoSpyPrice) * 100;
       }
     }
 
@@ -147,16 +178,17 @@ serve(async (req) => {
           period: '5D',
           change: fiveDayChange,
           changePercent: fiveDayChange,
-          vsBenchmark: fiveDayChange - spyDailyChange,
+          vsBenchmark: fiveDayChange - fiveDaySpyChange,
         },
         '1M': {
           period: '1M',
           change: oneMonthChange,
           changePercent: oneMonthChange,
-          vsBenchmark: oneMonthChange - spyDailyChange,
+          vsBenchmark: oneMonthChange - oneMonthSpyChange,
         },
       },
       priceHistory,
+      spyHistory,
       news: (news || []).slice(0, 5).map((n: any) => ({
         id: n.id?.toString() || Math.random().toString(),
         headline: n.headline,

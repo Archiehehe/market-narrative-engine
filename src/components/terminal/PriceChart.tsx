@@ -1,15 +1,48 @@
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import { XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart, Line, LineChart, Legend, ComposedChart } from 'recharts';
 import { PricePoint } from '@/types/stock';
 import { Check } from 'lucide-react';
+import { useMemo } from 'react';
 
 interface PriceChartProps {
   priceHistory: PricePoint[];
+  spyHistory: PricePoint[];
   symbol: string;
   relativePerformance: number;
   confidence: number;
 }
 
-export function PriceChart({ priceHistory, symbol, relativePerformance, confidence }: PriceChartProps) {
+export function PriceChart({ priceHistory, spyHistory, symbol, relativePerformance, confidence }: PriceChartProps) {
+  // Rebase both series to start from 0% returns
+  const chartData = useMemo(() => {
+    if (!priceHistory || priceHistory.length === 0) return [];
+    
+    const stockBasePrice = priceHistory[0]?.price || 1;
+    const spyBasePrice = spyHistory?.[0]?.price || 1;
+    
+    // Create a map of SPY prices by date for easy lookup
+    const spyPriceMap = new Map<string, number>();
+    spyHistory?.forEach(point => {
+      spyPriceMap.set(point.date, point.price);
+    });
+    
+    return priceHistory.map((point, index) => {
+      const stockReturn = ((point.price - stockBasePrice) / stockBasePrice) * 100;
+      const spyPrice = spyPriceMap.get(point.date) || spyHistory?.[index]?.price;
+      const spyReturn = spyPrice ? ((spyPrice - spyBasePrice) / spyBasePrice) * 100 : null;
+      
+      // Format date for display
+      const date = new Date(point.date);
+      const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      
+      return {
+        date: formattedDate,
+        fullDate: point.date,
+        [symbol]: stockReturn,
+        SPY: spyReturn,
+      };
+    });
+  }, [priceHistory, spyHistory, symbol]);
+
   if (!priceHistory || priceHistory.length === 0) {
     return (
       <div className="space-y-3">
@@ -22,32 +55,41 @@ export function PriceChart({ priceHistory, symbol, relativePerformance, confiden
   }
 
   const isPositive = relativePerformance >= 0;
-  const chartColor = isPositive ? 'hsl(190, 100%, 60%)' : 'hsl(0, 70%, 55%)';
+  const stockColor = 'hsl(190, 100%, 60%)';
+  const spyColor = 'hsl(0, 0%, 50%)';
 
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <p className="font-mono text-sm text-muted-foreground">30-day price history</p>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-0.5 bg-primary rounded" />
-          <span className="font-mono text-xs text-muted-foreground">{symbol}</span>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-0.5 rounded" style={{ backgroundColor: stockColor }} />
+            <span className="font-mono text-xs text-muted-foreground">{symbol}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-0.5 rounded" style={{ backgroundColor: spyColor }} />
+            <span className="font-mono text-xs text-muted-foreground">SPY</span>
+          </div>
         </div>
       </div>
       
       <div className="h-48 bg-card border border-border rounded-lg p-4">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={priceHistory} margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>
+          <ComposedChart data={chartData} margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>
             <defs>
-              <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor={chartColor} stopOpacity={0.3} />
-                <stop offset="95%" stopColor={chartColor} stopOpacity={0} />
+              <linearGradient id="stockGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor={stockColor} stopOpacity={0.3} />
+                <stop offset="95%" stopColor={stockColor} stopOpacity={0} />
               </linearGradient>
             </defs>
             <XAxis 
               dataKey="date" 
               axisLine={false}
               tickLine={false}
-              tick={false}
+              tick={{ fill: 'hsl(0, 0%, 50%)', fontSize: 10, fontFamily: 'JetBrains Mono' }}
+              interval="preserveStartEnd"
+              tickCount={5}
             />
             <YAxis 
               domain={['auto', 'auto']}
@@ -55,7 +97,7 @@ export function PriceChart({ priceHistory, symbol, relativePerformance, confiden
               tickLine={false}
               tick={{ fill: 'hsl(0, 0%, 50%)', fontSize: 10, fontFamily: 'JetBrains Mono' }}
               width={50}
-              tickFormatter={(value) => `$${value.toFixed(0)}`}
+              tickFormatter={(value) => `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`}
             />
             <Tooltip
               contentStyle={{
@@ -66,17 +108,27 @@ export function PriceChart({ priceHistory, symbol, relativePerformance, confiden
                 fontSize: '12px',
               }}
               labelStyle={{ color: 'hsl(0, 0%, 50%)' }}
-              itemStyle={{ color: 'hsl(0, 0%, 90%)' }}
-              formatter={(value: number) => [`$${value.toFixed(2)}`, 'Price']}
+              formatter={(value: number, name: string) => [
+                `${value >= 0 ? '+' : ''}${value.toFixed(2)}%`,
+                name
+              ]}
             />
             <Area
               type="monotone"
-              dataKey="price"
-              stroke={chartColor}
+              dataKey={symbol}
+              stroke={stockColor}
               strokeWidth={2}
-              fill="url(#priceGradient)"
+              fill="url(#stockGradient)"
             />
-          </AreaChart>
+            <Line
+              type="monotone"
+              dataKey="SPY"
+              stroke={spyColor}
+              strokeWidth={1.5}
+              strokeDasharray="4 4"
+              dot={false}
+            />
+          </ComposedChart>
         </ResponsiveContainer>
       </div>
 
