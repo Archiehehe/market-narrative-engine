@@ -1,6 +1,6 @@
 export interface StockQuote {
   symbol: string;
-  name: string;
+  name?: string;
   price: number;
   change: number;
   changePercent: number;
@@ -8,7 +8,7 @@ export interface StockQuote {
   open: number;
   high: number;
   low: number;
-  volume: number;
+  volume?: number;
   timestamp: number;
 }
 
@@ -41,6 +41,7 @@ export interface StockData {
     '1M': StockPerformance;
   };
   priceHistory: PricePoint[];
+  spyHistory: PricePoint[];
   news: NewsArticle[];
   range: {
     low: number;

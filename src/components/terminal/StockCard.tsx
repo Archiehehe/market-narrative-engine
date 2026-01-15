@@ -3,6 +3,7 @@ import { StockHeader } from './StockHeader';
 import { PerformanceTabs } from './PerformanceTabs';
 import { MarketComparison } from './MarketComparison';
 import { NarrativeSummary } from './NarrativeSummary';
+import { AISummaryBox } from './AISummaryBox';
 import { MarketCatalysts } from './MarketCatalysts';
 import { PriceChart } from './PriceChart';
 
@@ -25,10 +26,13 @@ export function StockCard({ data }: StockCardProps) {
       
       <PriceChart 
         priceHistory={data.priceHistory}
+        spyHistory={data.spyHistory}
         symbol={data.quote.symbol}
         relativePerformance={data.marketComparison.relativePerformance}
         confidence={data.confidence}
       />
+      
+      <AISummaryBox data={data} />
     </div>
   );
 }
