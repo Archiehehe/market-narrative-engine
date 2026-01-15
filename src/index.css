@@ -1,96 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Narrative Terminal Design System - Dark Terminal Aesthetic */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core terminal colors */
+    --background: 0 0% 4%;
+    --foreground: 0 0% 90%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 90%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 90%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Terminal accent - cyan/teal for interactivity */
+    --primary: 190 100% 50%;
+    --primary-foreground: 0 0% 4%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 70%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 50%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 190 80% 40%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Semantic trading colors */
+    --positive: 145 70% 45%;
+    --positive-foreground: 145 70% 90%;
+    --negative: 0 70% 55%;
+    --negative-foreground: 0 70% 90%;
+    --neutral: 45 80% 55%;
+    --neutral-foreground: 45 80% 90%;
 
-    --radius: 0.5rem;
+    --border: 0 0% 15%;
+    --input: 0 0% 12%;
+    --ring: 190 100% 50%;
 
-    --sidebar-background: 0 0% 98%;
+    --radius: 0.375rem;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Chart colors */
+    --chart-line: 190 100% 60%;
+    --chart-area: 190 100% 50%;
+    --chart-grid: 0 0% 15%;
 
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Sidebar */
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 80%;
+    --sidebar-primary: 190 100% 50%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 190 100% 50%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Same as root - always dark */
+    --background: 0 0% 4%;
+    --foreground: 0 0% 90%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 90%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 90%;
+    --primary: 190 100% 50%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 70%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 50%;
+    --accent: 190 80% 40%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --positive: 145 70% 45%;
+    --positive-foreground: 145 70% 90%;
+    --negative: 0 70% 55%;
+    --negative-foreground: 0 70% 90%;
+    --neutral: 45 80% 55%;
+    --neutral-foreground: 45 80% 90%;
+    --border: 0 0% 15%;
+    --input: 0 0% 12%;
+    --ring: 190 100% 50%;
   }
 }
 
@@ -99,7 +99,173 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Terminal monospace text */
+  .font-mono {
+    font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+  }
+}
+
+@layer components {
+  /* Terminal title styling */
+  .terminal-title {
+    @apply font-mono text-4xl md:text-5xl font-light tracking-[0.3em] text-foreground;
+  }
+
+  .terminal-subtitle {
+    @apply font-mono text-sm tracking-[0.2em] text-muted-foreground uppercase;
+  }
+
+  /* Search input styling */
+  .terminal-search {
+    @apply w-full bg-card border border-border rounded-lg px-4 py-4 font-mono text-lg;
+    @apply text-foreground placeholder:text-muted-foreground;
+    @apply focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary;
+    @apply transition-all duration-200;
+  }
+
+  /* Performance badge */
+  .badge-positive {
+    @apply bg-positive/20 text-positive border border-positive/30 px-3 py-1 rounded font-mono text-xs uppercase tracking-wider;
+  }
+
+  .badge-negative {
+    @apply bg-negative/20 text-negative border border-negative/30 px-3 py-1 rounded font-mono text-xs uppercase tracking-wider;
+  }
+
+  .badge-neutral {
+    @apply bg-secondary text-secondary-foreground border border-border px-3 py-1 rounded font-mono text-xs uppercase tracking-wider;
+  }
+
+  /* Price display */
+  .price-large {
+    @apply font-mono text-4xl md:text-5xl font-medium text-foreground tracking-tight;
+  }
+
+  .price-change-positive {
+    @apply font-mono text-2xl font-medium text-positive;
+  }
+
+  .price-change-negative {
+    @apply font-mono text-2xl font-medium text-negative;
+  }
+
+  /* Metric card */
+  .metric-card {
+    @apply bg-card border border-border rounded-lg p-4 transition-all duration-200;
+    @apply hover:border-primary/50 cursor-pointer;
+  }
+
+  .metric-card.active {
+    @apply border-primary bg-primary/5;
+  }
+
+  /* News item */
+  .news-item {
+    @apply bg-card border border-border rounded-lg p-4 transition-all duration-200;
+    @apply hover:border-muted-foreground/30 hover:bg-card/80;
+  }
+
+  /* Error state */
+  .error-box {
+    @apply bg-negative/10 border border-negative/30 rounded-lg p-4 text-negative font-mono text-sm;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/20 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/40;
+  }
+}
+
+@layer utilities {
+  .text-positive {
+    color: hsl(var(--positive));
+  }
+
+  .text-negative {
+    color: hsl(var(--negative));
+  }
+
+  .text-neutral {
+    color: hsl(var(--neutral));
+  }
+
+  .bg-positive {
+    background-color: hsl(var(--positive));
+  }
+
+  .bg-negative {
+    background-color: hsl(var(--negative));
+  }
+
+  .border-positive {
+    border-color: hsl(var(--positive));
+  }
+
+  .border-negative {
+    border-color: hsl(var(--negative));
+  }
+
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Glow effects */
+  .glow-positive {
+    box-shadow: 0 0 20px hsl(var(--positive) / 0.2);
+  }
+
+  .glow-negative {
+    box-shadow: 0 0 20px hsl(var(--negative) / 0.2);
+  }
+
+  .glow-primary {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.2);
   }
 }
