@@ -1,73 +1,168 @@
-# Welcome to your Lovable project
+# Market Narrative Engine
 
-## Project info
+**Explain the market. Don’t predict it.**
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Market Narrative Engine is a market intelligence system that translates price action into structured, plausible narratives.  
+Instead of forecasting prices or flooding users with raw data, it explains *why* assets moved by contextualizing them within sector behavior, market regimes, and known catalysts.
 
-## How can I edit this code?
+> Markets move on stories.  
+> This engine surfaces the dominant ones.
 
-There are several ways of editing your application.
+🌐 Live Demo: https://marketnarrative.lovable.app/
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 🧠 Core Philosophy
 
-Changes made via Lovable will be committed automatically to this repo.
+Most market tools do one of two things:
 
-**Use your preferred IDE**
+- 📈 Predict prices  
+- 📊 Display raw data  
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+This project does something different:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+> **It explains market behavior using narrative attribution rather than prediction.**
 
-Follow these steps:
+Key principles:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- Markets move for **multiple overlapping reasons**
+- Traders act on **interpretations**, not equations
+- There is no single “truth” — only **dominant explanations**
+- The goal is **clarity**, not certainty
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+This positions the engine as a **decision-support and interpretation tool**, not a trading signal.
 
-# Step 3: Install the necessary dependencies.
-npm i
+---
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+## 🧩 What the Engine Produces
 
-**Edit a file directly in GitHub**
+### 1. Asset-Level Narratives (Micro)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+For any stock or ETF, the engine generates a concise explanation of recent price action.
 
-**Use GitHub Codespaces**
+**Example — Alibaba (BABA):**
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+> **BABA +4.2%**
+> Alibaba outperformed the broader market as investors focused on the growth potential of its AI infrastructure and NVIDIA H200 integration despite rising capital expenditures. The positive price action suggests a rotation into oversold emerging market leaders that demonstrate innovation discipline. Watch for upcoming earnings to confirm if AI revenue growth can offset cash flow concerns and sustain this relative strength. 
+> Recent strength follows a period of prolonged underperformance and coincides with renewed optimism around China tech and AI infrastructure exposure.  
+> Outperformance versus SPY suggests relative positioning recovery rather than broad market beta.
 
-## What technologies are used for this project?
+Each narrative answers:
 
-This project is built with:
+- What moved?
+- Why did it likely move?
+- What *kind* of move is this?
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
+### 2. Relative Performance & Context
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Assets are evaluated **relative to benchmarks** (e.g. SPY), not in isolation.
 
-## Can I connect a custom domain to my Lovable project?
+Displayed context includes:
 
-Yes, you can!
+- Rolling return windows (1D / 5D / 30D)
+- Outperformance vs benchmark
+- Confidence score in explanation
+- Visual price history vs index
+- Recent range and inflection points
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+This frames moves as *contextual*, not absolute.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+---
+
+### 3. Market & News Catalysts
+
+The engine surfaces relevant market narratives and commentary and ties them to observed price behavior — without simply summarizing headlines.
+
+**Example Context:**
+
+- Emerging markets ETF commentary (IEMG)
+- China tech sentiment inflection
+- AI-related GPU shipment developments
+- Relative risk-on behavior vs US equities
+
+This helps distinguish:
+
+- Event-driven moves  
+- Regional or sector sympathy  
+- Mean reversion vs momentum continuation  
+- Positioning or flow-driven recoveries  
+
+---
+
+### 4. Narrative Confidence
+
+Each explanation includes a **confidence score** — not confidence in returns, but confidence in the *explanation itself*.
+
+High confidence reflects:
+- Strong relative performance signals
+- Peer or regional confirmation
+- Coherent narrative alignment between price and context
+
+---
+
+## 🧪 Narrative Labels (Structured, Not Vibes)
+
+Each move is implicitly categorized using analytical labels such as:
+
+- Sector-driven
+- Region-driven (e.g. Emerging Markets / China)
+- Event-aware
+- Momentum continuation
+- Mean reversion
+- Positioning recovery
+- Low-conviction / noise
+
+This structure keeps the system analytical rather than opinionated.
+
+---
+
+## 📈 Narrative Drift Over Time
+
+A core idea behind the engine is that **narratives evolve** even when prices don’t immediately follow.
+
+For example:
+
+- Early phase: prolonged underperformance
+- Mid phase: sentiment stabilization
+- Later phase: relative outperformance and narrative repair
+
+Tracking how explanations change over time helps users understand *how stories shift before trends fully emerge*.
+
+
+---
+
+## 🚫 What This Is Not
+
+- ❌ A trading bot  
+- ❌ A signal service  
+- ❌ A price prediction engine  
+- ❌ A news summarizer  
+
+It is intentionally **non-prescriptive**.
+
+---
+
+## 👥 Intended Audience
+
+- Discretionary traders
+- Market analysts
+- Portfolio managers
+- Finance students learning how to interpret price action
+
+Anyone who wants to think **better**, not faster.
+
+---
+
+## 🧾 One-Sentence Pitch
+
+> *A Market Narrative Engine that explains price movements using regime, relative performance, and event context instead of predictions.*
+
+---
+
+## ⚠️ Disclaimer
+
+This project is for educational and analytical purposes only.  
+It does not constitute financial advice or investment recommendations.
+Not for Commercial Use. Check License for more details.
